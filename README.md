@@ -24,3 +24,15 @@ root directory
 - terraform destroy -> Destroy everything (OR delete resources). In simple words, "Tear it all down".
 - terraform -h -> terraform help
 - terraform -version -> terraform version
+- terraform plan -out=deploy.tfplan -> Create terraform plan and save it in deploy.tfplan file to use with terraform apply command to deploy the infrastructure.
+  - This is also usefull when we want to automate the process of deploying/creating resources using terraform
+  - We can create one pipeline to build the terraform files (using terraform plan)
+  - We can create another pipeline to deploy/create the resources using terraform apply.
+- terraform show -> to show/inspect the complete state of infrastructure.
+- terraform destroy -target -> delete only the specific resource and not the entire infrastrucuter by looking into the .tfstate file.
+
+
+### Notes
+- Execute terraform init for the first time
+  - Creates .terraform.lock.hcl to store/record the provider information. This is for guarantee if we want to exeucte terraform init in furture.
+  - Create .terraform folder to contain provider related file. This folder has been git ignored.
