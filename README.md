@@ -25,6 +25,7 @@ root directory
 - terraform -h -> terraform help
 - terraform -version -> terraform version
 - terraform plan -out=deploy.tfplan -> Create terraform plan and save it in deploy.tfplan file to use with terraform apply command to deploy the infrastructure.
+  - terraform apply "deploy.tfplan"
   - This is also usefull when we want to automate the process of deploying/creating resources using terraform
   - We can create one pipeline to build the terraform files (using terraform plan)
   - We can create another pipeline to deploy/create the resources using terraform apply.
