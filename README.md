@@ -37,3 +37,12 @@ root directory
 - Execute terraform init for the first time
   - Creates .terraform.lock.hcl to store/record the provider information. This is for guarantee if we want to exeucte terraform init in furture.
   - Create .terraform folder to contain provider related file. This folder has been git ignored.
+
+## Syntax
+- Provider
+  - provider "azurerm" {}
+- Resource
+  - resource <provider> <name>
+  - resource "azurerm_resource_group" "learnrg" {}
+- Link any resource with other for example, storage account will be created in a resource group
+  - This will be a property of `resource "azurerm_storage_account" "storagename"{ resource_group_name = azurerm_resource_group.learnrg.name}
