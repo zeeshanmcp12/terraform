@@ -1,0 +1,38 @@
+resource "azurerm_resource_group" "resourceGroup"{
+    name = "learntfrgweu"
+    location = "West Europe"
+}
+
+resource "azurerm_storage_account" "storageAccount" {
+    name = "learntfsto"
+    resource_group_name = azurerm_resource_group.resourceGroup.name
+    account_tier = "Standard"
+    location = "West Europe"
+    account_replication_type = "LRS" 
+}
+
+resource "azurerm_storage_container" "storageContainer" {
+  name = "tfstcontainer"
+  storage_account_name = azurerm_storage_account.storageAccount.name
+}
+
+
+resource "azurerm_app_service_plan" "appServicePlan" {
+  name                = "learntfasp"
+  location            = azurerm_resource_group.resourceGroup.location
+  resource_group_name = azurerm_resource_group.resourceGroup.name
+
+  sku {
+    tier = "Standard"
+    size = "S1"
+  }
+}
+
+resource "azurerm_function_app" "functionApp" {
+  name                       = "learntf-func-dev"
+  location                   = azurerm_resource_group.resourceGroup.location
+  resource_group_name        = azurerm_resource_group.resourceGroup.name
+  app_service_plan_id        = azurerm_app_service_plan.appServicePlan.id
+  storage_account_name       = azurerm_storage_account.storageAccount.name
+  storage_account_access_key = azurerm_storage_account.storageAccount.primary_access_key
+}
