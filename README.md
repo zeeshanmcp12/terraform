@@ -32,6 +32,7 @@ root directory
 - terraform show -> to show/inspect the complete state of infrastructure.
 - terraform destroy -target -> delete only the specific resource and not the entire infrastrucuter by looking into the .tfstate file.
 - terraform plan -destroy -> destroy the infrastructure that have define in current plan
+- terraform fmt -> Rewrites all terraform configuration files in a well presented and easy to read format. Similar to golang.
 
 
 ### Command specific notes

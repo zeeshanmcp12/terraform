@@ -1,25 +1,25 @@
-resource "azurerm_resource_group" "resourceGroup"{
-    name = var.resource_group_name
-    location = var.location
-    tags = {
-      "Environment" = var.tag
-    }
+resource "azurerm_resource_group" "resourceGroup" {
+  name     = var.resource_group_name
+  location = var.location
+  tags = {
+    "Environment" = var.tag
+  }
 }
 
 resource "azurerm_storage_account" "storageAccount" {
-    name = var.storage_account_name
-    resource_group_name = azurerm_resource_group.resourceGroup.name
-    account_tier = "Standard"
-    location = var.location
-    account_replication_type = "LRS" 
+  name                     = var.storage_account_name
+  resource_group_name      = azurerm_resource_group.resourceGroup.name
+  account_tier             = "Standard"
+  location                 = var.location
+  account_replication_type = "LRS"
 
-    tags = {
-      "Environment" = var.tag
-    }
+  tags = {
+    "Environment" = var.tag
+  }
 }
 
 resource "azurerm_storage_container" "storageContainer" {
-  name = var.storage_container_name
+  name                 = var.storage_container_name
   storage_account_name = azurerm_storage_account.storageAccount.name
 }
 
@@ -35,8 +35,8 @@ resource "azurerm_app_service_plan" "appServicePlan" {
   }
 
   tags = {
-      "Environment" = var.tag
-    }
+    "Environment" = var.tag
+  }
 }
 
 resource "azurerm_function_app" "functionApp" {
@@ -48,6 +48,6 @@ resource "azurerm_function_app" "functionApp" {
   storage_account_access_key = azurerm_storage_account.storageAccount.primary_access_key
 
   tags = {
-      "Environment" = var.tag
-    }
+    "Environment" = var.tag
+  }
 }
