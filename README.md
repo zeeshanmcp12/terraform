@@ -34,6 +34,15 @@ root directory
 - terraform plan -destroy -> destroy the infrastructure that have define in current plan
 
 
+### Command specific notes
+- terraform destroy
+  - This command destroy the infrastructure
+  - terraform plan -destroy -out="deploy.tfplan"
+    - This will create an execution plan to delete the resources
+    - terraform apply "deploy.tfplan"
+      - This will apply the execution plan we created above.
+
+
 ### Notes
 - Execute terraform init for the first time
   - Creates .terraform.lock.hcl to store/record the provider information. This is for guarantee if we want to exeucte terraform init in furture.
