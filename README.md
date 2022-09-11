@@ -31,6 +31,7 @@ root directory
   - We can create another pipeline to deploy/create the resources using terraform apply.
 - terraform show -> to show/inspect the complete state of infrastructure.
 - terraform destroy -target -> delete only the specific resource and not the entire infrastrucuter by looking into the .tfstate file.
+- terraform plan -destroy -> destroy the infrastructure that have define in current plan
 
 
 ### Notes
@@ -46,3 +47,14 @@ root directory
   - resource "azurerm_resource_group" "learnrg" {}
 - Link any resource with other for example, storage account will be created in a resource group
   - This will be a property of `resource "azurerm_storage_account" "storagename"{ resource_group_name = azurerm_resource_group.learnrg.name}
+
+
+## Remember these four bullet points!
+- Providers represent a cloud provider or a local provider
+- Resources can be invoked to create/update infrastructure locally or in the cloud
+- State is representation of the infrastructure created/updated by Terraform
+- Data Sources are “read-only” resources
+
+## Azure specific notes
+- We must have to set the context (azure subscription) in which we want to create the resources using terraform
+- This context has to be created by azure cli command 'az account set --subscription <subscription_id-name>'
