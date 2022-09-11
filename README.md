@@ -33,6 +33,7 @@ root directory
 - terraform destroy -target -> delete only the specific resource and not the entire infrastrucuter by looking into the .tfstate file.
 - terraform plan -destroy -> destroy the infrastructure that have define in current plan
 - terraform fmt -> Rewrites all terraform configuration files in a well presented and easy to read format. Similar to golang.
+- terraform validate -> very usefull command to see if configuration is valid or not. It also indicate if any property (attribute) is missing in a resource etc.
 
 
 ### Command specific notes
@@ -42,6 +43,8 @@ root directory
     - This will create an execution plan to delete the resources
     - terraform apply "deploy.tfplan"
       - This will apply the execution plan we created above.
+- terraform validate
+  - A must run command before executing terraform plan
 
 
 ### Notes
