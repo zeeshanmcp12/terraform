@@ -34,6 +34,7 @@ root directory
 - terraform plan -destroy -> destroy the infrastructure that have define in current plan
 - terraform fmt -> Rewrites all terraform configuration files in a well presented and easy to read format. Similar to golang.
 - terraform validate -> very usefull command to see if configuration is valid or not. It also indicate if any property (attribute) is missing in a resource etc.
+- terraform plan -var-file="dev.tfvars"
 
 
 ### Command specific notes
@@ -45,6 +46,9 @@ root directory
       - This will apply the execution plan we created above.
 - terraform validate
   - A must run command before executing terraform plan
+- terraform plan -var-file="dev.tfvars"
+  - If we don't want to provide default values in 'variables.tf' file and pick the var values from '*.tfvars' file.
+  - In this case, we can create tfvars according to our environments for example, dev, stage, prod etc
 
 
 ### Notes
