@@ -43,9 +43,18 @@ resource "azurerm_function_app" "functionApp" {
   storage_account_name       = var.storage_account_name
   app_service_plan_id        = azurerm_app_service_plan.appServicePlan.id
   storage_account_access_key = azurerm_storage_account.storageAccount.primary_access_key
+  version                    = "~3"
 
   tags = {
     Environment = var.tag
   }
+
+  app_settings = {
+    Environment              = var.tag
+    FUNCTIONS_WORKER_RUNTIME = "dotnet"
+
+  }
+
+
 
 }
