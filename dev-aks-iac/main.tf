@@ -11,7 +11,7 @@ locals {
 
 module "rg" {
   source   = "./modules/rg"
-  name     = local.resourceGroupName
+  # name     = local.resourceGroupName
   location = local.location
   tags     = local.tags
 
@@ -19,7 +19,7 @@ module "rg" {
 
 module "storageAccount" {
   source   = "./modules/storageAccount"
-  name     = local.storageAccountName
+  name     = var.storage_account_name
   location = local.location
   tags     = local.tags
 }
