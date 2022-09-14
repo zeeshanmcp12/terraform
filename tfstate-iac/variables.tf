@@ -10,6 +10,6 @@ variable "location" {
 
 }
 
-variable "storage_account_container" {
+variable "storage_container_name" {
 
 }

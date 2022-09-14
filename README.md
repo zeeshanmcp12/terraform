@@ -35,6 +35,7 @@ root directory
 - terraform fmt -> Rewrites all terraform configuration files in a well presented and easy to read format. Similar to golang.
 - terraform validate -> very usefull command to see if configuration is valid or not. It also indicate if any property (attribute) is missing in a resource etc.
 - terraform plan -var-file="dev.tfvars"
+- terraform import -> to import the existing resource
 
 
 ### Command specific notes
@@ -49,6 +50,7 @@ root directory
 - terraform plan -var-file="dev.tfvars"
   - If we don't want to provide default values in 'variables.tf' file and pick the var values from '*.tfvars' file.
   - In this case, we can create tfvars according to our environments for example, dev, stage, prod etc
+- terraform init -backend-config storage_account_name=learntfsto -backend-config container_name=cn-learntf -backend-config resource_group_name=learntfrg -backend-config key=dev-terraform.tfstate
 
 
 ### Notes
