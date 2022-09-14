@@ -1,6 +1,8 @@
-backend "azurerm" {
-    resource_group_name = var.resource_group_name
-    storage_account_name = var.storage_account_name
-    container_name = var.storage_account_container
-    key = "dev-terraform.tfstate"
+terraform {
+  backend "azurerm" {
+    resource_group_name  = "learntfrg"
+    storage_account_name = "learntfsto"
+    container_name       = "cn-tfstate"
+    key                  = "dev-terraform.tfstate"
+  }
 }

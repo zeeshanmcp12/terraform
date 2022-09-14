@@ -13,7 +13,7 @@ variable "storage_account_name" {
   description = "(optional) describe your variable"
 }
 
-variable "storage_account_container" {
+variable "storage_container_name" {
   type        = string
   description = "(optional) describe your variable"
 }
