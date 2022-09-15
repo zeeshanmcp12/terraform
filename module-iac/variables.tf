@@ -8,6 +8,6 @@ variable "location" {
 
 }
 
-variable "tag" {
+variable "tags" {
 
 }
