@@ -11,3 +11,7 @@ variable "location" {
 variable "tags" {
 
 }
+
+variable "storageAccount" {
+
+}
