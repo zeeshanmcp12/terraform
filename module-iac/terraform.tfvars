@@ -1,4 +1,6 @@
+project             = "learntf"
 resource_group_name = "learntfrg"
 location            = "westeurope"
 tags                = "dev"
 storageAccount      = "learntfsto"
+environment         = "dev"

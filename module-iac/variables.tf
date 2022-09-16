@@ -15,3 +15,11 @@ variable "tags" {
 variable "storageAccount" {
 
 }
+
+variable "environment" {
+
+}
+
+variable "project" {
+
+}

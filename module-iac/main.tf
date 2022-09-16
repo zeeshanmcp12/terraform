@@ -1,18 +1,22 @@
+locals {
+  resource_name        = "${var.project}-${var.environment}"
+  storage_account_name = "${var.project}${var.environment}"
+}
+
 module "rg" {
-  source              = "./modules/rg"
-  resource_group_name = var.resource_group_name
-  location            = var.location
+  source        = "./modules/rg"
+  resource_name = var.resource_group_name
+  location      = var.location
   tags = {
     Environment = var.tags
   }
-
 }
 
 module "storageAccount" {
-  source              = "./modules/storageAccount"
-  name                = var.storageAccount
-  resource_group_name = var.resource_group_name
-  location            = var.location
+  source        = "./modules/storageAccount"
+  resource_name = local.resource_name
+  rg_name       = module.rg.name
+  location      = var.location
   tags = {
     Environment = var.tags
   }

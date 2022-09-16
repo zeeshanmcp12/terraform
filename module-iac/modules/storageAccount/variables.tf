@@ -1,11 +1,14 @@
-variable "resource_group_name" {
-
-}
-variable "storage_account_name" {
+variable "rg_name" {
 
 }
 
 variable "location" {
+  type    = string
+  default = "westeurope"
+
+}
+
+variable "resource_name" {
 
 }
 
