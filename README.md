@@ -57,6 +57,8 @@ root directory
 - Execute terraform init for the first time
   - Creates .terraform.lock.hcl to store/record the provider information. This is for guarantee if we want to exeucte terraform init in furture.
   - Create .terraform folder to contain provider related file. This folder has been git ignored.
+  - backendServiceArm
+    - This is the config name for service connection in terraform when working with azure devops.
 
 ## Syntax
 - Provider

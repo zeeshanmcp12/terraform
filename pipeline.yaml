@@ -7,7 +7,7 @@ pr: none
 pool: 
   name: Default
 stages:
-  - stage: Build
+  - stage: InstallTF
     jobs:
       - job: terraform_init
         steps:
@@ -16,8 +16,8 @@ stages:
             inputs:
               terraformVersion: 'latest'
 
-  - stage: Plan
-    dependsOn: [Build]
+  - stage: VersionCheck
+    dependsOn: [InstallTF]
     jobs:
       - job: terraform_version_check
         steps:
@@ -26,4 +26,16 @@ stages:
             inputs:
               targetType: 'inline'
               script: |
-                terraform -v | terraform -h
+                terraform -v
+                
+  - stage: GetHelp
+    dependsOn: [VersionCheck]
+    jobs:
+      - job: terraform_version_check
+        steps:
+          - task: PowerShell@2
+            displayName: Check Terraform version and get help
+            inputs:
+              targetType: 'inline'
+              script: |
+                terraform -h
