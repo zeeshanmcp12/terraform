@@ -22,6 +22,7 @@ stages:
       - job: terraform_version_check
         steps:
           - task: PowerShell@2
+            displayName: Check Terraform version and get help
             inputs:
               targetType: 'inline'
               script: |
