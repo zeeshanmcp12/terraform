@@ -31,10 +31,10 @@ stages:
   - stage: GetHelp
     dependsOn: [VersionCheck]
     jobs:
-      - job: terraform_version_check
+      - job: terraform_help
         steps:
           - task: PowerShell@2
-            displayName: Check Terraform version and get help
+            displayName: Get help
             inputs:
               targetType: 'inline'
               script: |
