@@ -1,6 +1,7 @@
 name: $(Build.DefinitionName)-$(SourceBranchName)_$(date:yyyyMMdd)$(rev:.r)
 
-trigger: none
+trigger:
+  - main
 
 pr: none
 pool: 
@@ -24,4 +25,4 @@ stages:
             inputs:
               targetType: 'inline'
               script: |
-                terraform -v
+                terraform -v | terraform -h
