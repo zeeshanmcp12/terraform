@@ -77,3 +77,20 @@ root directory
 ## Azure specific notes
 - We must have to set the context (azure subscription) in which we want to create the resources using terraform
 - This context has to be created by azure cli command 'az account set --subscription <subscription_id-name>'
+- azurerm_client_config
+  - We can use this as data source to get the client id, object id, tenant id and subscription id. for example:
+```
+data "azurerm_client_config" "current" {
+}
+output "account_id" {
+  data.azurerm_client_config.current.client_id
+}
+```
+
+## Output from child module
+In order to get the outputs from child modules, we need to add them in an Output.tf file of root module with below syntax:
+```
+output "name" {
+  value = module.rg.name
+}
+```
