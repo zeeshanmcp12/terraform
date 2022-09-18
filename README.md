@@ -106,3 +106,13 @@ output "name" {
   value = module.rg.name
 }
 ```
+
+## Azure pipeline specific notes
+- We don't need to use following variables in `terraform plan` task once it's initialized in `terraform init` task:
+  - backendServiceArm: $(backendServiceConnection)
+  - backendAzureRmResourceGroupName: $(tfBackendResourceGroupName)
+  - backendAzureRmStorageAccountName: $(tfBackendStorageAccountName)
+  - backendAzureRmContainerName: $(tfBackendContainerName)
+  - backendAzureRmKey: 'terraform.tfstate'
+- environmentServiceNameAzureRM: $(backendServiceConnection)
+  - this one is required in `terraform plan` task to authenticate with our subscription.

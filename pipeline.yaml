@@ -94,22 +94,40 @@ stages:
                 provider: 'azurerm'
                 command: 'plan'
                 commandOptions: '-input=false -out="$(System.DefaultWorkingDirectory)/module-iac/deploy.tfplan" -var-file="$(System.DefaultWorkingDirectory)/module-iac/terraform.tfvars"'
-                # backendServiceArm: $(backendServiceConnection)
-                # backendAzureRmResourceGroupName: $(tfBackendResourceGroupName)
-                # backendAzureRmStorageAccountName: $(tfBackendStorageAccountName)
-                # backendAzureRmContainerName: $(tfBackendContainerName)
-                # backendAzureRmKey: 'terraform.tfstate'
                 workingDirectory: '$(System.DefaultWorkingDirectory)/module-iac/'
                 environmentServiceNameAzureRM: $(backendServiceConnection)
-            
 
-  # - stage: Validate
-  #   dependsOn: [Init]
-  #   jobs:
-  #     - job: terraform_validate
-  #       steps:
-  #           - task: TerraformTaskV3@3
-  #             inputs:
-  #               provider: 'azurerm'
-  #               command: 'validate'
-  #               workingDirectory: '$(System.DefaultWorkingDirectory)/module-iac/'
+  - stage: Apply
+    dependsOn: [Plan]
+    jobs:
+      - job: terraform_apply
+        steps:
+            - task: TerraformTaskV3@3
+              displayName: Initialize terraform template
+              inputs:
+                provider: 'azurerm'
+                command: 'init'
+                backendServiceArm: $(backendServiceConnection)
+                backendAzureRmResourceGroupName: $(tfBackendResourceGroupName)
+                backendAzureRmStorageAccountName: $(tfBackendStorageAccountName)
+                backendAzureRmContainerName: $(tfBackendContainerName)
+                backendAzureRmKey: 'terraform.tfstate'
+                workingDirectory: '$(System.DefaultWorkingDirectory)/module-iac/'
+
+            - task: TerraformTaskV3@3
+              displayName: Create an execution plan
+              inputs:
+                provider: 'azurerm'
+                command: 'plan'
+                commandOptions: '-input=false -out="$(System.DefaultWorkingDirectory)/module-iac/deploy.tfplan" -var-file="$(System.DefaultWorkingDirectory)/module-iac/terraform.tfvars"'
+                workingDirectory: '$(System.DefaultWorkingDirectory)/module-iac/'
+                environmentServiceNameAzureRM: $(backendServiceConnection)
+
+            - task: TerraformTaskV3@3
+              displayName: Apply an execution plan
+              inputs:
+                provider: 'azurerm'
+                command: 'apply'
+                commandOptions: '-input=false -auto-approve $(System.DefaultWorkingDirectory)/module-iac/deploy.tfplan"'
+                workingDirectory: '$(System.DefaultWorkingDirectory)/module-iac/'
+                environmentServiceNameAzureRM: $(backendServiceConnection)
