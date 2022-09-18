@@ -94,11 +94,11 @@ stages:
                 provider: 'azurerm'
                 command: 'plan'
                 commandOptions: '-input=false -out="$(System.DefaultWorkingDirectory)/module-iac/deploy.tfplan" -var-file="$(System.DefaultWorkingDirectory)/module-iac/terraform.tfvars"'
-                backendServiceArm: $(backendServiceConnection)
-                backendAzureRmResourceGroupName: $(tfBackendResourceGroupName)
-                backendAzureRmStorageAccountName: $(tfBackendStorageAccountName)
-                backendAzureRmContainerName: $(tfBackendContainerName)
-                backendAzureRmKey: 'terraform.tfstate'
+                # backendServiceArm: $(backendServiceConnection)
+                # backendAzureRmResourceGroupName: $(tfBackendResourceGroupName)
+                # backendAzureRmStorageAccountName: $(tfBackendStorageAccountName)
+                # backendAzureRmContainerName: $(tfBackendContainerName)
+                # backendAzureRmKey: 'terraform.tfstate'
                 workingDirectory: '$(System.DefaultWorkingDirectory)/module-iac/'
                 environmentServiceNameAzureRM: $(backendServiceConnection)
             

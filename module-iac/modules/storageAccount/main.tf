@@ -1,5 +1,5 @@
 resource "azurerm_storage_account" "storageAccount" {
-  name                     = "${var.resource_name}sto"
+  name                     = "sto${var.resource_name}"
   account_replication_type = "LRS"
   account_tier             = "Standard"
   resource_group_name      = var.rg_name
