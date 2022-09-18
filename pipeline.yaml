@@ -5,8 +5,8 @@ trigger:
     include:
     - main
   paths:
-  exclude:
-  - README.md
+    exclude:
+    - README.md
 
 pr: none
 
