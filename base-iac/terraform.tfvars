@@ -1,0 +1,5 @@
+rg_name                = "rg-learningclouddevops-dev"
+location               = "southeastasia"
+tags                   = "dev"
+storage_account_name   = "stotfstatedev"
+storage_container_name = "cn-tfstate"
