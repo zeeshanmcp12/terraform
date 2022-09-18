@@ -57,8 +57,18 @@ root directory
 - Execute terraform init for the first time
   - Creates .terraform.lock.hcl to store/record the provider information. This is for guarantee if we want to exeucte terraform init in furture.
   - Create .terraform folder to contain provider related file. This folder has been git ignored.
-  - backendServiceArm
-    - This is the config name for service connection in terraform when working with azure devops.
+  - backend
+    - backend refers to the backend being used in terraform. It would be azurerm (for Azure) and local. So the attributes starting with backend relates to configuration as below:
+    - backendServiceArm
+      - This is the config name for service connection in terraform when working with azure devops.
+    - backendAzureRmResourceGroupName
+      - Rg having storage account that has container which contains tfstate file.
+    - backendAzureRmStorageAccountName
+      - Storage account to host container for state file.
+    - backendAzureRmContainerName
+      - Container to host tf state file.
+    - backendAzureRmKey
+      - tf state file. The name could be anything. for example dev-terraform.tfstate
 
 ## Syntax
 - Provider

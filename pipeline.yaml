@@ -4,12 +4,25 @@ trigger:
   - main
 
 pr: none
+
+variables:
+  - name: backendServiceConnection
+    value: 'CloudDevOPSDev'
+  - name: tfBackendResourceGroupName
+    value: 'rg-learningclouddevops-dev'
+  - name: tfBackendStorageAccountName
+    value: 'stotfstatedev'
+  - name: tfBackendContainerName
+    value: 'cn-tfstate'
+  - name: tfBackendKey
+    value: 'terraform.tfstate'
+
 pool: 
   name: Default
 stages:
-  - stage: InstallTF
+  - stage: Install
     jobs:
-      - job: terraform_init
+      - job: terraform_install
         steps:
           - task: TerraformInstaller@0
             displayName: Install Terraform
@@ -17,25 +30,52 @@ stages:
               terraformVersion: 'latest'
 
   - stage: VersionCheck
-    dependsOn: [InstallTF]
+    dependsOn: [Install]
     jobs:
       - job: terraform_version_check
         steps:
           - task: PowerShell@2
-            displayName: Check Terraform version and get help
+            displayName: Check Terraform version
             inputs:
               targetType: 'inline'
               script: |
                 terraform -v
                 
-  - stage: GetHelp
+  # - stage: GetHelp
+  #   dependsOn: [VersionCheck]
+  #   jobs:
+  #     - job: terraform_help
+  #       steps:
+  #         - task: PowerShell@2
+  #           displayName: Get help
+  #           inputs:
+  #             targetType: 'inline'
+  #             script: |
+  #               terraform -h
+  - stage: Init
     dependsOn: [VersionCheck]
     jobs:
-      - job: terraform_help
+      - job: terraform_init
         steps:
-          - task: PowerShell@2
-            displayName: Get help
-            inputs:
-              targetType: 'inline'
-              script: |
-                terraform -h
+            - task: TerraformTaskV3@3
+              displayName: Initialize terraform template
+              inputs:
+                provider: 'azurerm'
+                command: 'init'
+                backendServiceArm: $(backendServiceConnection)
+                backendAzureRmResourceGroupName: $(tfBackendResourceGroupName)
+                backendAzureRmStorageAccountName: $(tfBackendStorageAccountName)
+                backendAzureRmContainerName: $(tfBackendContainerName)
+                backendAzureRmKey: 'terraform.tfstate'
+                workingDirectory: '$(System.DefaultWorkingDirectory)/module-iac/'
+
+  - stage: Validate
+    dependsOn: [Init]
+    jobs:
+      - job: terraform_init
+        steps:
+            - task: TerraformTaskV3@3
+              inputs:
+                provider: 'azurerm'
+                command: 'validate'
+                workingDirectory: '$(System.DefaultWorkingDirectory)/module-iac/'

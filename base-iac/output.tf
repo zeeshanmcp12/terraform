@@ -11,7 +11,7 @@ output "sto_id" {
 }
 
 output "sto_access_key" {
-  value = azurerm_storage_account.storageAccount.primary_access_key
+  value     = azurerm_storage_account.storageAccount.primary_access_key
   sensitive = true
 }
 
