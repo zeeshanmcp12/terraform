@@ -116,3 +116,4 @@ output "name" {
   - backendAzureRmKey: 'terraform.tfstate'
 - environmentServiceNameAzureRM: $(backendServiceConnection)
   - this one is required in `terraform plan` task to authenticate with our subscription.
+- Testing CI trigger
