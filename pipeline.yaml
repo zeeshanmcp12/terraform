@@ -52,19 +52,8 @@ stages:
   #             targetType: 'inline'
   #             script: |
   #               terraform -h
-  - stage: Validate
-    dependsOn: [VersionCheck]
-    jobs:
-      - job: terraform_validate
-        steps:
-            - task: TerraformTaskV3@3
-              inputs:
-                provider: 'azurerm'
-                command: 'validate'
-                workingDirectory: '$(System.DefaultWorkingDirectory)/module-iac/'
-
   - stage: Init
-    dependsOn: [Validate]
+    dependsOn: [VersionCheck]
     jobs:
       - job: terraform_init
         steps:
@@ -80,3 +69,21 @@ stages:
                 backendAzureRmKey: 'terraform.tfstate'
                 workingDirectory: '$(System.DefaultWorkingDirectory)/module-iac/'
 
+            - task: TerraformTaskV3@3
+              displayName: Validate initialized template
+              inputs:
+                provider: 'azurerm'
+                command: 'validate'
+                workingDirectory: '$(System.DefaultWorkingDirectory)/module-iac/'
+            
+
+  # - stage: Validate
+  #   dependsOn: [Init]
+  #   jobs:
+  #     - job: terraform_validate
+  #       steps:
+  #           - task: TerraformTaskV3@3
+  #             inputs:
+  #               provider: 'azurerm'
+  #               command: 'validate'
+  #               workingDirectory: '$(System.DefaultWorkingDirectory)/module-iac/'
