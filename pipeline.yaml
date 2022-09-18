@@ -29,18 +29,13 @@ stages:
             inputs:
               terraformVersion: 'latest'
 
-  - stage: VersionCheck
-    dependsOn: [Install]
-    jobs:
-      - job: terraform_version_check
-        steps:
           - task: PowerShell@2
             displayName: Check Terraform version
             inputs:
               targetType: 'inline'
               script: |
                 terraform -v
-                
+
   # - stage: GetHelp
   #   dependsOn: [VersionCheck]
   #   jobs:
@@ -53,7 +48,7 @@ stages:
   #             script: |
   #               terraform -h
   - stage: Init
-    dependsOn: [VersionCheck]
+    dependsOn: [Install]
     jobs:
       - job: terraform_init
         steps:
@@ -74,6 +69,36 @@ stages:
               inputs:
                 provider: 'azurerm'
                 command: 'validate'
+                workingDirectory: '$(System.DefaultWorkingDirectory)/module-iac/'
+
+  - stage: Plan
+    dependsOn: [Init]
+    jobs:
+      - job: terraform_plan
+        steps:
+            - task: TerraformTaskV3@3
+              displayName: Initialize terraform template
+              inputs:
+                provider: 'azurerm'
+                command: 'init'
+                backendServiceArm: $(backendServiceConnection)
+                backendAzureRmResourceGroupName: $(tfBackendResourceGroupName)
+                backendAzureRmStorageAccountName: $(tfBackendStorageAccountName)
+                backendAzureRmContainerName: $(tfBackendContainerName)
+                backendAzureRmKey: 'terraform.tfstate'
+                workingDirectory: '$(System.DefaultWorkingDirectory)/module-iac/'
+
+            - task: TerraformTaskV3@3
+              displayName: Create an execution plan
+              inputs:
+                provider: 'azurerm'
+                command: 'plan'
+                commandOptions: '-input=false -out="$(System.DefaultWorkingDirectory)/module-iac/deploy.tfplan" -var-file="$(System.DefaultWorkingDirectory)/module-iac/terraform.tfvars"'
+                backendServiceArm: $(backendServiceConnection)
+                backendAzureRmResourceGroupName: $(tfBackendResourceGroupName)
+                backendAzureRmStorageAccountName: $(tfBackendStorageAccountName)
+                backendAzureRmContainerName: $(tfBackendContainerName)
+                backendAzureRmKey: 'terraform.tfstate'
                 workingDirectory: '$(System.DefaultWorkingDirectory)/module-iac/'
             
 
